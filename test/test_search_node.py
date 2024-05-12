@@ -44,3 +44,12 @@ def test_correct_path_cost_and_depth_on_expansion():
         assert node.path_cost == 3  # New path cost should be initial cost + action cost
         assert node.depth == 1  # Depth should increment by 1
 
+def test_duplicate_digits_in_state():
+    start_state = WorldState([1, 1, 3, 4])
+    initial_node = SearchNode(start_state, None, 0, 0)
+    fringe = [initial_node]
+    # Mock or define an action that would be successful
+    action = lambda state, n1, n2: (True, WorldState([n1+n2]+[num for num in state.available_numbers if num != n1 and num != n2]), 1)
+    
+    expanded = initial_node.expand_node([action], fringe)
+    assert len(expanded) == 6  # Assuming all pairs work
